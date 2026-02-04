@@ -1,0 +1,115 @@
+/* Reset et Fond global */
+.login-screen {
+  background: radial-gradient(circle at center, #444 0%, #1a1a1a 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header */
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.brand-title {
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+/* La Carte */
+.auth-card {
+  background: white;
+  width: 380px;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.auth-subtitle {
+  color: #555;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 35px;
+}
+
+/* Formulaire et Inputs */
+.input-field {
+  margin-bottom: 25px;
+}
+
+.input-field input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-field input:focus {
+  border-bottom: 2px solid #444;
+}
+
+/* Checkbox personnalisée */
+.options-row {
+  margin: 20px 0 30px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+}
+
+/* Bouton */
+.submit-btn {
+  width: 100%;
+  background-color: #494c4f;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #333;
+}
+
+/* Liens */
+.extra-links {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.link-yellow {
+  color: #ffcc00;
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.signup-text {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.link-yellow-bold {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+}
