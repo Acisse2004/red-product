@@ -78,8 +78,13 @@ const HotelList = ({ onGoToDashboard, onCreateHotel, onLogout }) => {
         <header className="top-header">
           <h1 className="page-title">Liste des hôtels</h1>
 
-          {/* Notification + Photo + Déconnexion */}
+          {/* Recherche + Notification + Photo + Déconnexion */}
           <div className="header-actions">
+            {/* Champ de recherche */}
+            <div className="search-box">
+              <input type="text" placeholder="Recherche" />
+            </div>
+
             {/* Cloche de notification avec badge */}
             <div className="notif-wrapper">
               <span className="notif-icon">🔔</span>
