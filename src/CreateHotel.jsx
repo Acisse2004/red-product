@@ -1,27 +1,11 @@
 import React, { useState } from 'react';
-import { FaBookmark, FaSignOutAlt } from 'react-icons/fa';
+import { FaBookmark } from 'react-icons/fa';
 import './Dashboard.css';
 import './HotelList.css';
-import './CreateHotel.css';
+import './CreateHotel.css'; // Assure-toi d'inclure ce fichier pour le modal
 
 const HotelList = ({ onGoToDashboard, onCreateHotel, onLogout }) => {
   const [isCreating, setIsCreating] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1200);
-
-  // Détecte le redimensionnement uniquement pour fermer automatiquement sur petit écran
-  React.useEffect(() => {
-    const handleResize = () => {
-      // Ferme automatiquement la sidebar si on passe en petit écran
-      if (window.innerWidth < 1200) {
-        setSidebarOpen(false);
-      }
-      // Ne pas rouvrir automatiquement quand on repasse en grand écran
-    };
-
-    window.addEventListener('resize', handleResize);
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const hotels = [
     { id: 1, name: 'Hôtel Terrou-Bi', address: 'Boulevard Martin Luther King Dakar, 11500', price: '25.000 XOF', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop' },
@@ -36,16 +20,11 @@ const HotelList = ({ onGoToDashboard, onCreateHotel, onLogout }) => {
 
   return (
     <div className="dashboard-layout">
-      {/* Overlay pour fermer la sidebar sur mobile */}
-      {sidebarOpen && window.innerWidth < 1200 && (
-        <div className="overlay" onClick={() => setSidebarOpen(false)}></div>
-      )}
-
       {/* Sidebar */}
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className="sidebar">
         <div className="sidebar-header">
           <FaBookmark className="sidebar-logo-icon" />
-          <span className="sidebar-logo-text">PRODUIT ROUGE</span>
+          <span className="sidebar-logo-text">RED PRODUCT</span>
         </div>
 
         <nav className="sidebar-nav">
@@ -78,28 +57,16 @@ const HotelList = ({ onGoToDashboard, onCreateHotel, onLogout }) => {
         <header className="top-header">
           <h1 className="page-title">Liste des hôtels</h1>
 
-          {/* Notification + Photo + Déconnexion */}
           <div className="header-actions">
-            {/* Cloche de notification avec badge */}
-            <div className="notif-wrapper">
-              <span className="notif-icon">🔔</span>
-              <span className="notif-badge">3</span>
+            <div className="search-box">
+              <input type="text" placeholder="Recherche" />
             </div>
-
-            {/* Photo de profil */}
-            <img
-              src="https://i.pravatar.cc/50"
-              alt="User"
-              className="top-avatar"
-            />
-            
-            {/* Bouton de déconnexion */}
-            <button 
-              className="logout-btn"
-              onClick={onLogout}
-              title="Se déconnecter"
+            <button
+              type="button"
+              className="create-hotel-btn"
+              onClick={() => setIsCreating(true)}
             >
-              <FaSignOutAlt />
+              + Créer un nouveau hôtel
             </button>
           </div>
         </header>
@@ -110,15 +77,6 @@ const HotelList = ({ onGoToDashboard, onCreateHotel, onLogout }) => {
             <h2 className="hotels-title">
               Hôtels <span className="hotels-count">{hotels.length}</span>
             </h2>
-            
-            {/* BOUTON DÉPLACÉ ICI - aligné à droite avec "Hôtels 8" */}
-            <button
-              type="button"
-              className="create-hotel-btn"
-              onClick={() => setIsCreating(true)}
-            >
-              + Créer un nouveau hôtel
-            </button>
           </div>
 
           <div className="hotels-grid">
@@ -143,15 +101,6 @@ const HotelList = ({ onGoToDashboard, onCreateHotel, onLogout }) => {
           </div>
         </div>
       </main>
-
-      {/* Bouton hamburger mobile pour TOGGLE (ouvrir/fermer) la sidebar */}
-      <button 
-        className="mobile-open-btn" 
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        style={{ display: window.innerWidth >= 1200 ? 'none' : 'block' }}
-      >
-        ☰
-      </button>
 
       {/* MODAL DE CRÉATION */}
       {isCreating && (

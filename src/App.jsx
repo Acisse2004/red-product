@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { FaBookmark } from 'react-icons/fa';
-import Dashboard from './Dashboard';
+import Dashboard from './dashboard';
 import HotelList from './HotelList';
+import CreateHotel from './CreateHotel'; //AJOUT
 import './App.css';
 
 function App() {
@@ -28,13 +29,37 @@ function App() {
     setCurrentPage('signup');
   };
 
-  // Navigation
+  /* =======================
+     NAVIGATION DES PAGES
+     ======================= */
+
   if (currentPage === 'dashboard') {
-    return <Dashboard onGoToHotels={() => setCurrentPage('hotels')} onLogout={handleLogout} />;
+    return (
+      <Dashboard
+        onGoToHotels={() => setCurrentPage('hotels')}
+        onLogout={handleLogout}
+      />
+    );
   }
 
   if (currentPage === 'hotels') {
-    return <HotelList onGoToDashboard={() => setCurrentPage('dashboard')} onLogout={handleLogout} />;
+    return (
+      <HotelList
+        onGoToDashboard={() => setCurrentPage('dashboard')}
+        onCreateHotel={() => setCurrentPage('create-hotel')} // AJOUT
+        onLogout={handleLogout}
+      />
+    );
+  }
+
+  // NOUVELLE PAGE : CRÉER UN HÔTEL
+  if (currentPage === 'create-hotel') {
+    return (
+      <CreateHotel
+        onBack={() => setCurrentPage('hotels')}
+        onLogout={handleLogout}
+      />
+    );
   }
 
   // Page Mot de passe oublié
@@ -52,18 +77,18 @@ function App() {
             Entrez votre adresse e-mail ci-dessous et nous vous envoyons des instructions sur la façon de modifier votre mot de passe.
           </p>
           
-          <form className="login-form" onSubmit={(e) => { 
-            e.preventDefault(); 
-            // Afficher un message de confirmation
-            alert('Instructions envoyées ! Vérifiez votre boîte e-mail.');
-            // Rediriger vers le Dashboard
-            setCurrentPage('dashboard');
-          }}>
+          <form
+            className="login-form"
+            onSubmit={(e) => { 
+              e.preventDefault(); 
+              alert('Instructions envoyées ! Vérifiez votre boîte e-mail.');
+              setCurrentPage('dashboard');
+            }}
+          >
             <input 
               type="email" 
               placeholder="Votre e-mail" 
               className="input-field" 
-              required 
             />
             
             <button type="submit" className="login-button">
@@ -93,25 +118,17 @@ function App() {
         <div className="login-card">
           <p className="login-subtitle">Inscrivez-vous en tant que Admin</p>
           
-          <form className="login-form" onSubmit={(e) => { e.preventDefault(); alert('Inscription réussie !'); setCurrentPage('login'); }}>
-            <input 
-              type="text" 
-              placeholder="Nom" 
-              className="input-field" 
-              required 
-            />
-            <input 
-              type="email" 
-              placeholder="E-mail" 
-              className="input-field" 
-              required 
-            />
-            <input 
-              type="password" 
-              placeholder="Mot de passe" 
-              className="input-field" 
-              required 
-            />
+          <form
+            className="login-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              alert('Inscription réussie !');
+              setCurrentPage('login');
+            }}
+          >
+            <input type="text" placeholder="Nom" className="input-field" />
+            <input type="email" placeholder="E-mail" className="input-field" />
+            <input type="password" placeholder="Mot de passe" className="input-field" />
             
             <div className="checkbox-container">
               <input type="checkbox" id="terms" required />
@@ -145,18 +162,8 @@ function App() {
         <p className="login-subtitle">Connectez-vous en tant que Admin</p>
         
         <form className="login-form" onSubmit={handleLogin}>
-          <input 
-            type="email" 
-            placeholder="E-mail" 
-            className="input-field" 
-            required 
-          />
-          <input 
-            type="password" 
-            placeholder="Mot de passe" 
-            className="input-field" 
-            required 
-          />
+          <input type="email" placeholder="E-mail" className="input-field" />
+          <input type="password" placeholder="Mot de passe" className="input-field" />
           
           <div className="checkbox-container">
             <input type="checkbox" id="remember" />
@@ -169,7 +176,14 @@ function App() {
         </form>
 
         <div className="footer-links">
-          <a href="#" className="forgot-password" onClick={(e) => { e.preventDefault(); handleForgotPassword(); }}>
+          <a
+            href="#"
+            className="forgot-password"
+            onClick={(e) => {
+              e.preventDefault();
+              handleForgotPassword();
+            }}
+          >
             Mot de passe oublié?
           </a>
           <p className="signup-text">

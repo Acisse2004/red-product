@@ -1,47 +1,127 @@
-// src/Dashboard.jsx
-import React from 'react';
-import { FaBookmark, FaEnvelope, FaFileAlt, FaUsers, FaHotel, FaBuilding } from 'react-icons/fa';
-import './Dashboard.css';
+import React, { useState, useEffect } from "react";
+import {
+  FaBookmark,
+  FaEnvelope,
+  FaFileAlt,
+  FaUsers,
+  FaHotel,
+  FaBuilding,
+  FaSignOutAlt,
+} from "react-icons/fa";
+
+import "./Dashboard.css";
 
 const Dashboard = ({ onGoToHotels, onLogout }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1200);
+
+  // Détecte le redimensionnement uniquement pour fermer automatiquement sur petit écran
+  useEffect(() => {
+    const handleResize = () => {
+      // Ferme automatiquement la sidebar si on passe en petit écran
+      if (window.innerWidth < 1200) {
+        setSidebarOpen(false);
+      }
+      // Ne pas rouvrir automatiquement quand on repasse en grand écran
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const stats = [
-    { id: 1, icon: <FaFileAlt />, number: '125', label: 'Formulaires', subtitle: 'Je ne sais pas quoi mettre', color: '#9B59B6' },
-    { id: 2, icon: <FaEnvelope />, number: '40', label: 'Messages', subtitle: 'Je ne sais pas quoi mettre', color: '#1ABC9C' },
-    { id: 3, icon: <FaUsers />, number: '600', label: 'Utilisateurs', subtitle: 'Je ne sais pas quoi mettre', color: '#F39C12' },
-    { id: 4, icon: <FaEnvelope />, number: '25', label: 'E-mails', subtitle: 'Je ne sais pas quoi mettre', color: '#E74C3C' },
-    { id: 5, icon: <FaHotel />, number: '40', label: 'Hôtels', subtitle: 'Je ne sais pas quoi mettre', color: '#9B59B6' },
-    { id: 6, icon: <FaBuilding />, number: '02', label: 'Entités', subtitle: 'Je ne sais pas quoi mettre', color: '#3498DB' },
+    {
+      id: 1,
+      icon: <FaFileAlt />,
+      number: "125",
+      label: "Formulaires",
+      subtitle: "je ne sais pas quoi mettre",
+      color: "#9B59B6",
+    },
+    {
+      id: 2,
+      icon: <FaEnvelope />,
+      number: "40",
+      label: "Messages",
+      subtitle: "je ne sais pas quoi mettre",
+      color: "#1ABC9C",
+    },
+    {
+      id: 3,
+      icon: <FaUsers />,
+      number: "600",
+      label: "Utilisateurs",
+      subtitle: "je ne sais pas quoi mettre",
+      color: "#F39C12",
+    },
+    {
+      id: 4,
+      icon: <FaEnvelope />,
+      number: "25",
+      label: "E-mails",
+      subtitle: "je ne sais pas quoi mettre",
+      color: "#E74C3C",
+    },
+    {
+      id: 5,
+      icon: <FaHotel />,
+      number: "40",
+      label: "Hôtels",
+      subtitle: "je ne sais pas quoi mettre",
+      color: "#9B59B6",
+    },
+    {
+      id: 6,
+      icon: <FaBuilding />,
+      number: "02",
+      label: "Entités",
+      subtitle: "je ne sais pas quoi mettre",
+      color: "#3498DB",
+    },
   ];
 
   return (
     <div className="dashboard-layout">
+      {/* Overlay */}
+      {sidebarOpen && window.innerWidth < 1200 && (
+        <div
+          className="overlay"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <FaBookmark className="sidebar-logo-icon" />
-          <span className="sidebar-logo-text">RED PRODUCT</span>
+          <span className="sidebar-logo-text">PRODUIT ROUGE</span>
         </div>
 
         <nav className="sidebar-nav">
-          <p className="nav-section-title">Principal</p>
-          <button className="nav-item active">
-            <span className="nav-icon">📊</span>
-            <span>Dashboard</span>
-          </button>
-          <button className="nav-item" onClick={onGoToHotels}>
-            <span className="nav-icon">🏨</span>
-            <span>Liste des hôtels</span>
+          <button className="nav-item active">Dashboard</button>
+
+          <button
+            className="nav-item"
+            onClick={() => {
+              onGoToHotels();
+              setSidebarOpen(false);
+            }}
+          >
+            Liste des hôtels
           </button>
         </nav>
 
+        {/* Bloc utilisateur */}
         <div className="sidebar-user">
-          <img 
-            src="https://i.pravatar.cc/40" 
-            alt="User" 
-            className="user-avatar" 
+          <img
+            src="https://i.pravatar.cc/40"
+            alt="User"
+            className="user-avatar"
           />
+
           <div className="user-info">
-            <p className="user-name">Mouhamet Badiane</p>
+            <p className="user-name">Aissatou Cisse</p>
+
             <p className="user-status">
               <span className="status-dot"></span>
               en ligne
@@ -50,46 +130,59 @@ const Dashboard = ({ onGoToHotels, onLogout }) => {
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* Main */}
       <main className="main-content">
-        {/* Header */}
+        {/* HEADER COMPLET */}
         <header className="top-header">
-          <h1 className="page-title">Dashboard</h1>
-          
-          <div className="header-actions">
-            <div className="search-box">
-              <input type="text" placeholder="Recherche" />
+          <div className="header-left">
+            <h1 className="page-title">Tableau de bord</h1>
+
+            <p className="welcome-text">
+              <strong>Bienvenue sur RED Product</strong> <br />
+              Lorem ipsum dolor sit amet consectetur
+            </p>
+          </div>
+
+          {/* Notification + Photo + Déconnexion */}
+          <div className="header-right">
+            {/* Cloche de notification avec badge */}
+            <div className="notif-wrapper">
+              <span className="notif-icon">🔔</span>
+              <span className="notif-badge">3</span>
             </div>
-            <button className="notification-btn">
-              🔔
-              <span className="notification-badge">3</span>
-            </button>
-            <img 
-              src="https://i.pravatar.cc/40?img=2" 
-              alt="Profile" 
-              className="profile-avatar" 
+
+            {/* Photo de profil */}
+            <img
+              src="https://i.pravatar.cc/50"
+              alt="User"
+              className="top-avatar"
             />
-            <button onClick={onLogout} className="logout-btn">🚪</button>
+            
+            {/* Bouton de déconnexion */}
+            <button 
+              className="logout-btn"
+              onClick={onLogout}
+              title="Se déconnecter"
+            >
+              <FaSignOutAlt />
+            </button>
           </div>
         </header>
 
-        {/* Content */}
         <div className="dashboard-content">
-          <h2 className="welcome-title">Bienvenue sur RED Product</h2>
-          <p className="welcome-subtitle">Lorem ipsum dolor sit amet consectetur</p>
-
           <div className="stats-grid">
-            {stats.map(stat => (
+            {stats.map((stat) => (
               <div key={stat.id} className="stat-card">
-                <div 
-                  className="stat-icon" 
+                <div
+                  className="stat-icon"
                   style={{ backgroundColor: stat.color }}
                 >
                   {stat.icon}
                 </div>
+
                 <div className="stat-info">
                   <h3 className="stat-number">
-                    {stat.number} <span className="stat-label">{stat.label}</span>
+                    {stat.number} {stat.label}
                   </h3>
                   <p className="stat-subtitle">{stat.subtitle}</p>
                 </div>
@@ -98,6 +191,15 @@ const Dashboard = ({ onGoToHotels, onLogout }) => {
           </div>
         </div>
       </main>
+
+      {/* Bouton hamburger mobile pour TOGGLE (ouvrir/fermer) la sidebar */}
+      <button 
+        className="mobile-open-btn" 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        style={{ display: window.innerWidth >= 1200 ? 'none' : 'block' }}
+      >
+        ☰
+      </button>
     </div>
   );
 };
