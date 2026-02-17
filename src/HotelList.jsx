@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaBookmark, FaSignOutAlt } from 'react-icons/fa';
-import './Dashboard.css';
+import './dashboard.css';
 import './HotelList.css';
 import './CreateHotel.css';
 
