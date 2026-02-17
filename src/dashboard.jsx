@@ -9,7 +9,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-import "./Dashboard.css";
+import "./dashboard.css";
 
 const Dashboard = ({ onGoToHotels, onLogout }) => {
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth >= 1200);
