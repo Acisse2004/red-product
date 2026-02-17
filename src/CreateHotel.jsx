@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaBookmark } from 'react-icons/fa';
-import './Dashboard.css';
+import './dashboard.css';
 import './HotelList.css';
 import './CreateHotel.css'; // Assure-toi d'inclure ce fichier pour le modal
 
